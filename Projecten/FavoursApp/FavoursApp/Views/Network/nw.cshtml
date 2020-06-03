@@ -1,0 +1,155 @@
+﻿@model ServicesInNetworkModel
+@{
+    ViewData["Title"] = "Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Dashboard/StyleSheet.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<link href="~/css/NetworkPage.css" rel="stylesheet" />
+<div class="p-0 main-body">
+    <div class="card-deck">
+        <div class="card">
+            <div class="card-body" id="main-back">
+
+                @*Buttons*@
+                <button id="newServiceBtn" class="btn btn-primary btn-dark new-event-button">New service</button>
+                <button id="leaveNetworkBtn" class="btn btn-danger leave-button">Leave network</button>
+
+                @*Most recent post*@
+                <div class="category-section">
+                    @{
+                        string[] categoryNames = ViewData["categories"] as string[];
+                        foreach (string category in categoryNames)
+                        {
+                            <div class="card category-card">
+                                <div class="card-header bg-dark text-white">
+                                    @category
+                                </div>
+                                <div class="card-body bg-white text-dark category-body">
+                                    @{
+                                        List<string> blockedCategories = new List<string>();
+                                        Model.serviceList.Reverse();
+                                        for (int i = 0; i < Model.serviceList.Count; i++)
+                                        {
+                                            if (Model.serviceList[i].Category == category && !blockedCategories.Contains(category))
+                                            {
+                                                blockedCategories.Add(category);
+                                                <div>
+                                                    <img class="d-block w-100 img-thumbnail service-thumbnail" src="~/uploadedimages/@Model.serviceList[i].Images" alt="Service Image" />
+                                                </div>
+                                                <div class="service-box-info">
+                                                    <input class="form-control service-info" disabled value="@Model.serviceList[i].Title" />
+                                                    <input class="form-control service-info" disabled value="@Model.serviceList[i].Description" />
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+                @*All services of a network*@
+                <div class="service-section">
+                    <ul class="list-group">
+                        @{
+                            for (int i = 0; i < Model.serviceList.Count; i++)
+                            {
+                                string cssclass = "list-group-item-dark";
+                                @if (i % 2 == 0)
+                                {
+                                    cssclass = "list-group-item-secondary";
+                                }
+                                <li class="list-group-item @cssclass service-list-item">
+                                    <a style="display: block; height: 100%" asp-action="Service" asp-controller="Service" asp-route-serviceID="@Model.serviceList[i].ServiceID">
+                                        <div class="service-list-thumbnail-box">
+                                            <img class="d-block h5 service-list-image" src="~/uploadedimages/@Model.serviceList[i].Images" alt="Service Image" />
+                                        </div>
+                                        <div class="service-list-title-box">
+                                            @Model.serviceList[i].Title
+                                        </div>
+                                        <div class="service-list-description-box">
+                                            @Model.serviceList[i].Description
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Creating new service modal*@
+@{Models.Service service = new Models.Service(); }
+<div id="myModal" class="modal">
+    <div class="card-header bg-dark text-white" style="border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;">New network:</div>
+    <div class="modal-content">
+        <span id="closeCreate" class="close">&times;</span>
+        <form id="eventForm" asp-controller="Network" asp-action="CreateService" method="post" enctype="multipart/form-data">
+            <input id="networkID" type="hidden" asp-for="@service.NetworkID" value="@ViewData["NetworkID"]" />
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Title: </span>
+                </div>
+                <input asp-for="@service.Title" id="titleField" class="form-control" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Description: </span>
+                </div>
+                <input asp-for="@service.Description" id="descriptionField" class="form-control" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Category: </span>
+                </div>
+                <select asp-for="@service.Category" id="categoryField" class="form-control" value="Select a category">
+                    @{
+                        foreach (string category in categoryNames)
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Image: </span>
+                </div>
+                <input class="form-control" type="file" id="image" name="image" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Date: </span>
+                </div>
+                <input asp-for="@service.Date" id="dateField" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddThh:mm")" />
+            </div>
+            <input id="submitButton" type="submit" value="Create" class="btn btn-outline-secondary bg-dark text-white additional-buttons" />
+        </form>
+    </div>
+</div>
+
+@*Confirmation Modal*@
+<div id="confirmModal" class="modal">
+    <div class="modal-content confirm-popup">
+        <div class="card confirm-card">
+            <div class="card-body bg-light confirm-body">
+                <h5>Are you sure you want to leave @Model.network.NetworkName?</h5>
+                <button id="confirmBtn" class="btn btn-outline-secondary bg-white text-dark">Confirm</button>
+                <button id="cancelBtn" class="btn btn-outline-danger bg-white text-danger">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/js/NetworkJS.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/umd/util.js" integrity="sha256-MrUaGbgAJYr1e+J4/O6kEZIqB5yOGZN5R+oobyC6h4A=" crossorigin="anonymous"></script>
+
+
+

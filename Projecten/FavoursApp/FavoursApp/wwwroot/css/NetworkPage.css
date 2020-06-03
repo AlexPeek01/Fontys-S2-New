@@ -1,0 +1,170 @@
+﻿@media only screen and (max-width: 900px) {
+    .category-section {
+        display: none;
+    }
+
+    .network-info {
+        display: none;
+    }
+
+    .main-body {
+        width: 100% !important;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .category-card {
+        margin: 0 !important;
+    }
+}
+.confirm-popup{
+    padding: 0;
+    max-width: 25%;
+    margin-left: 40%;
+    color: black;
+}
+.confirm-body{
+    padding: 5px !important;
+}
+.confirm-card {
+    padding: 0;
+    max-width: 100% !important;
+    color: black;
+}
+.leave-button {
+    margin-top: 1em !important;
+    margin-right: 2.3% !important;
+    float: right;
+    background-color: darkred;
+    border-color: darkred;
+}
+
+.card {
+    max-width: unset;
+    height: 200px;
+    widows: unset;
+    height: 100% !important;
+}
+
+.card-body {
+    padding: 0;
+    max-width: 100% !important;
+}
+
+.card-deck {
+    height: 100vh !important;
+}
+
+.card-header {
+    padding: 0.5em !important;
+}
+
+.category-card {
+    float: left !important;
+    padding: 0;
+    margin: auto;
+    max-width: 46% !important;
+    height: 15vh !important;
+    margin-top: 1em !important;
+    margin-left: 2.3% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+.service-box-info {
+    max-height: 9vh;
+    width: 85%;
+    float: right;
+}
+
+.service-list-thumbnail-box {
+    max-height: 30px;
+    min-width: 8vw;
+    float: left;
+    font-size: calc(6pt + 0.5vw) !important;
+}
+
+.service-list-title-box {
+    max-height: 30px;
+    width: 18vw;
+    margin-right: 15px;
+    float: left;
+    font-size: calc(6pt + 0.5vw) !important;
+}
+
+.service-list-description-box {
+    max-height: 30px;
+    margin-right: 15px;
+    width: 35vw;
+    float: left;
+    font-size: calc(6pt + 0.4vw) !important;
+}
+.service-list-item {
+    color: black !important;
+    cursor: pointer;
+}
+.service-list-item:hover{
+    background-color: grey;
+}
+.service-list-image {
+    height: 3vh;
+    width: 3vh;
+    margin-right: 15px;
+    border-radius: 100%;
+    background-color: grey;
+    padding: 1px;
+}
+
+.service-info {
+    font-size: calc(6pt + 0.3vw) !important;
+    height: 4vh !important;
+}
+
+.service-thumbnail {
+    height: 4.4vw !important;
+    width: 4.5vw !important;
+    float: left;
+}
+
+.category-body {
+    padding: 5px !important;
+}
+
+.banner-placeholder {
+    font-size: calc(30pt + 0.5vw) !important;
+    font-family: Calibri;
+    color: #212529;
+}
+
+https://localhost:44361/Account/Settings
+.netwerk-afbeelding {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 20% !important;
+}
+
+.members {
+    text-align: left !important;
+    padding: 2px 0px 2px 2px;
+}
+
+.main-body {
+    /*width: 85%;*/
+    width: 100%;
+    height: 100vh !important;
+    float: left !important;
+    /*padding-right: 5px !important;*/
+    padding-right: 0px;
+}
+
+.network-info {
+    width: 15% !important;
+    float: left !important;
+    height: 100vh !important;
+    text-align: center;
+    font-size: calc(4pt + 0.9vw) !important;
+}
+
+.new-event-button {
+    margin-top: 1em !important;
+    margin-left: 2.3% !important;
+}
